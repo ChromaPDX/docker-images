@@ -1,0 +1,29 @@
+{
+  "enable_transaction_stream": true,
+
+  "storage": {
+    "provider": "SQLite",
+    "path": "ledger.db"
+  },
+  "validator_mode": {
+    "instance_seed": "",
+    "validator": {
+      "provider": "PermissionBased",
+      "allow_p2pkh_accounts": true,
+      "allow_third_party_assets": true,
+      "admin_addresses": [],
+      "version_byte": 76
+    }
+  },
+  "anchoring": {
+    "provider": "Blockchain",
+    "key": "",
+    "bitcoin_api_url": "https://testnet.api.coinprism.com/v1/",
+    "network_byte": 111,
+    "fees": 5000,
+    "storage": {
+      "provider": "SQLite",
+      "path": "anchors.db"
+    }
+  }
+}
