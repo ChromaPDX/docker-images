@@ -1,0 +1,5 @@
+dist/
+example/
+db/
+build.sh
+dist.sh
