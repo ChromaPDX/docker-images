@@ -40,7 +40,7 @@ RUN git clone https://github.com/mongodb-partners/mongo-rocks.git /mongo-rocks \
     -j$(nproc) \
     --release \
     --prefix=/usr \
-    --strip \
+    --opt \
     mongod \
     install \
 &&  rm -R /mongo \
