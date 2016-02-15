@@ -15,7 +15,7 @@ RUN apt-get update \
 RUN git clone https://github.com/facebook/rocksdb.git \
 &&  cd rocksdb \
 &&  git checkout 4.1.fb  \
-&&  make -j$(nproc) shared_lib \
+&&  CXXFLAGS="-flto -Os -s" make -j$(nproc) shared_lib \
 &&  make install \
 &&  rm -R /rocksdb
 
@@ -34,7 +34,7 @@ RUN git clone https://github.com/mongodb-partners/mongo-rocks.git /mongo-rocks \
 &&  git checkout tags/r3.2.0 \
 &&  mkdir -p src/mongo/db/modules/ \
 &&  ln -sf /mongo-rocks src/mongo/db/modules/rocks \
-&&  scons \
+&&  CXXFLAGS="-flto -Os -s" scons \
     CPPPATH=/usr/local/include \
     LIBPATH=/usr/local/lib \
     -j$(nproc) \
@@ -46,4 +46,8 @@ RUN git clone https://github.com/mongodb-partners/mongo-rocks.git /mongo-rocks \
 &&  rm -R /mongo \
 &&  rm -R /mongo-rocks
 
-CMD cp /usr/bin/mongod /out/bin
+VOLUME /out
+
+CMD cp -av usr/local/lib/*.so /out/lib/ \
+&&  cp -av usr/local/lib/*.so.* /out/lib/ \
+&&  cp usr/bin/mongod /out/bin/mongod

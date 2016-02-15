@@ -1,13 +1,14 @@
 build:
-	mkdir build
+	mkdir -p build
+	mkdir -p dist/bin
+	mkdir -p dist/lib
 	cp build.Dockerfile build/Dockerfile
 	cd build && docker build -t chromapdx/mongo-rocks-builder .
-
-dist:
-	mkdir dist
 	docker run -d --name mongo-rocks-builder \
 		-v "$(shell pwd)/dist":/out \
 		chromapdx/mongo-rocks-builder
+
+dist:
 	cp dist.Dockerfile dist/Dockerfile
 	cd dist && docker build -t chromapdx/mongo-rocks-dist .
 
@@ -27,4 +28,4 @@ clean:
 	sudo rm -Rf build
 	sudo rm -Rf dist
 
-.PHONY: dist all test clean
+.PHONY: dist all build test clean
